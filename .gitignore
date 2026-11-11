@@ -6,6 +6,8 @@
 !/README.md
 !/site/
 !/tools/
+!/vercel.json
+!/.vercelignore
 
 # Video encodes that nothing on the page loads
 /site/media/video/

@@ -1,0 +1,18 @@
+# Public repo: only the site, the build tool and this README.
+# Everything else in the project folder (client photos, Higgsfield masters,
+# the brief, handoff notes, task ledger) stays local.
+/*
+!/.gitignore
+!/README.md
+!/site/
+!/tools/
+!/vercel.json
+!/.vercelignore
+
+# Video encodes that nothing on the page loads
+/site/media/video/
+
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
