@@ -4,6 +4,8 @@ A scroll-driven "property film" website for The Ridge @ Team Ranch, a restored l
 
 As you scroll, the camera moves through the property: a daytime drone arrival, then the dining area, kitchen, living room, bathroom and loft bedroom, then dusk outside, the logo, and the booking call. Nothing plays on its own; the scroll position picks the frame.
 
+**Live site:** https://the-ridge-team-ranch.vercel.app
+
 **Book a stay:** [The Ridge @ Team Ranch on Airbnb](https://www.airbnb.ca/rooms/1739515069661922522?locale=en)
 
 Built by Greg Hahn AI Consulting, Guelph, Ontario.
@@ -72,10 +74,13 @@ The film was generated with Higgsfield (Seedance 2.5), using the owner's own pho
 - Caption text over footage was measured at 8.2:1 contrast or better.
 - `prefers-reduced-motion` gets the still-frame page with the same content.
 
-## Before going live
+## Hosting
 
-- Change `og:image` and the JSON-LD `image` in `index.html` to absolute URLs once the domain is known.
-- Serve `.webp` with the `image/webp` MIME type and give `site/media/` long cache headers.
+The site is on Vercel. `vercel.json` serves `site/` as-is with no build step, caches `media/` for 30 days and `fonts/` and `vendor/` for a year. `.vercelignore` limits the upload to `site/` and `vercel.json`.
+
+Still to do:
+
+- Change `og:image` and the JSON-LD `image` in `index.html` to absolute URLs once the final domain is settled.
 - Test on real phones and with the operating system's reduced-motion setting. Both have only been emulated in a desktop browser so far.
 
 Page weight is about 38 MB of desktop frames or 17 MB of mobile frames, loaded progressively as you scroll.
