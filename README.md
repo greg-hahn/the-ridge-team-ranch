@@ -78,9 +78,10 @@ The film was generated with Higgsfield (Seedance 2.5), using the owner's own pho
 
 The site is on Vercel. `vercel.json` serves `site/` as-is with no build step, caches `media/` for 30 days and `fonts/` and `vendor/` for a year. `.vercelignore` limits the upload to `site/` and `vercel.json`.
 
+The canonical link, `og:url`, `og:image` and the JSON-LD `url` and `image` in `index.html` all use https://the-ridge-team-ranch.vercel.app. Update all five if the site moves to a custom domain.
+
 Still to do:
 
-- Change `og:image` and the JSON-LD `image` in `index.html` to absolute URLs once the final domain is settled.
 - Test on real phones and with the operating system's reduced-motion setting. Both have only been emulated in a desktop browser so far.
 
 Page weight is about 38 MB of desktop frames or 17 MB of mobile frames, loaded progressively as you scroll.
