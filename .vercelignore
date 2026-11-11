@@ -1,18 +1,11 @@
-# Public repo: only the site, the build tool and this README.
-# Everything else in the project folder (client photos, Higgsfield masters,
-# the brief, handoff notes, task ledger) stays local.
+# Upload only the site to Vercel. Everything else in the project folder
+# (client photos, Higgsfield masters, the brief, notes, env files) stays local.
+# Vercel needs the "/**" form to re-include a folder's contents.
 /*
-!/.gitignore
-!/README.md
-!/site/
-!/tools/
 !/vercel.json
-!/.vercelignore
+!/site
+!/site/**
 
 # Video encodes that nothing on the page loads
-/site/media/video/
-
-__pycache__/
-*.pyc
-.DS_Store
-Thumbs.db
+/site/media/video
+/site/media/video/**
