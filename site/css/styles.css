@@ -1,0 +1,460 @@
+/* The Ridge @ Team Ranch
+   Two modes share this stylesheet:
+   - default: a still-frame page (reduced motion, data saver, no JavaScript)
+   - html.cine: the scroll-driven film
+   Palette is taken from the logo and the photos. */
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("../fonts/cormorant-garamond-latin-wght-normal.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Jost";
+  src: url("../fonts/jost-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --forest: #17281f;
+  --forest-ink: #0b120e;
+  --logo-green: #20312b;
+  --sage: #88957c;
+  --gold: #ab9662;
+  --gold-light: #d3c08d;
+  --cream: #f6f0e2;
+  --wood: #c08a4e;
+  --stone: #8d8b85;
+
+  --serif: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --fade: 22vh;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--forest-ink);
+}
+
+body {
+  margin: 0;
+  background: var(--forest-ink);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, p, figure { margin: 0; }
+
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Focus ---------- */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.skip {
+  position: fixed;
+  top: 0.75rem; left: 0.75rem;
+  z-index: 20;
+  padding: 0.7rem 1.1rem;
+  background: var(--cream);
+  color: var(--forest);
+  font: 500 0.85rem/1 var(--sans);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transform: translateY(-300%);
+}
+.skip:focus { transform: none; }
+
+/* ---------- Type ---------- */
+h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.7rem, 7vw, 6.4rem);
+  line-height: 0.98;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+h1 .at {
+  font-size: 0.62em;
+  font-weight: 400;
+  color: var(--gold-light);
+  padding: 0 0.08em;
+  vertical-align: 0.12em;
+}
+
+.label {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+.statement {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 4.1vw, 3.7rem);
+  line-height: 1.08;
+  letter-spacing: 0.003em;
+  max-width: 21ch;
+  text-wrap: balance;
+}
+.statement--sm {
+  font-size: clamp(1.35rem, 2.3vw, 2rem);
+  line-height: 1.22;
+  max-width: 30ch;
+}
+
+.facts {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(0.82rem, 1.05vw, 0.95rem);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.facts span { color: var(--gold-light); padding: 0 0.35em; }
+
+/* ---------- Persistent booking link ---------- */
+.reserve {
+  position: fixed;
+  top: max(1rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+  z-index: 10;
+  padding: 0.72rem 1.05rem 0.68rem;
+  background: var(--forest);
+  color: var(--cream);
+  font: 500 0.72rem/1 var(--sans);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(211, 192, 141, 0.45);
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.reserve:hover { background: #21382c; border-color: var(--gold-light); }
+
+/* ---------- Button ---------- */
+.button {
+  display: inline-block;
+  padding: 1.05rem 1.9rem 1rem;
+  background: var(--cream);
+  color: var(--forest);
+  font: 500 0.82rem/1.2 var(--sans);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--cream);
+  transition: background-color 0.2s, color 0.2s;
+}
+.button:hover { background: transparent; color: var(--cream); }
+
+/* =====================================================================
+   DEFAULT MODE: key still frames with the same copy
+   ===================================================================== */
+#film, .stage, .progress, .hint { display: none; }
+
+.scene { position: relative; }
+.scene__pin {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+.scene__still { position: absolute; inset: 0; }
+.scene__still img,
+.scene__still picture { display: block; width: 100%; height: 100%; }
+.scene__still img { object-fit: cover; object-position: var(--focus, 50% 50%); }
+.scene__still--dim img { filter: brightness(0.5); }
+
+#dining   { --focus: 30% 50%; }
+#kitchen  { --focus: 55% 50%; }
+#living   { --focus: 42% 50%; }
+#bathroom { --focus: 30% 50%; }
+#bedroom  { --focus: 42% 50%; }
+#night, #mark, #book { --focus: 50% 60%; }
+
+.scene__copy {
+  position: relative;
+  padding: var(--fade) var(--gutter) calc(var(--gutter) * 0.9 + env(safe-area-inset-bottom));
+  /* Measured from the top of the block, so the scrim is at full strength exactly where
+     the text starts, however many lines the text runs to. */
+  background: linear-gradient(to bottom,
+      rgba(7, 12, 9, 0) 0,
+      rgba(7, 12, 9, 0.22) calc(var(--fade) * 0.3),
+      rgba(7, 12, 9, 0.62) calc(var(--fade) * 0.62),
+      rgba(7, 12, 9, 0.88) calc(var(--fade) * 0.95),
+      rgba(7, 12, 9, 0.93) 100%);
+  display: grid;
+  gap: 1.6rem;
+}
+.caption { display: grid; gap: 0.9rem; justify-items: start; }
+.caption--title { gap: 1.2rem; }
+
+.logo {
+  position: relative;
+  align-self: center;
+  margin: 13vh auto auto;
+  width: min(74vw, 30rem);
+  padding: clamp(0.4rem, 1.2vw, 0.8rem);
+  background: #fbf9f3;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+/* The logo file has a white field. Feathering only its empty margin lets the
+   untouched artwork sit on the cream panel without a visible edge. */
+.logo img {
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6.5%, #000 94%, transparent 100%),
+                      linear-gradient(to bottom, transparent 0, #000 8.5%, #000 92.5%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0, #000 6.5%, #000 94%, transparent 100%),
+              linear-gradient(to bottom, transparent 0, #000 8.5%, #000 92.5%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.book {
+  position: relative;
+  margin: auto;
+  padding: 6rem var(--gutter);
+  width: 100%;
+  max-width: 46rem;
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+  text-align: center;
+  isolation: isolate;
+}
+.book::before {
+  content: "";
+  position: absolute;
+  inset: -22% -14%;
+  z-index: -1;
+  background: radial-gradient(ellipse at 50% 50%, rgba(5, 9, 7, 0.62) 0, rgba(5, 9, 7, 0.5) 45%, rgba(5, 9, 7, 0) 72%);
+  pointer-events: none;
+}
+.book__title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.6rem, 6.4vw, 5.2rem);
+  line-height: 1;
+  text-wrap: balance;
+}
+.book__area {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 2.1vw, 1.75rem);
+  line-height: 1.3;
+  max-width: 30ch;
+  text-wrap: balance;
+}
+.book__cta { margin-top: 0.6rem; }
+.book__facts {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.book__facts span { color: var(--gold-light); padding: 0 0.3em; }
+
+/* =====================================================================
+   CINE MODE: one fixed stage, scroll moves the camera
+   ===================================================================== */
+.cine .stage {
+  display: block;
+  position: fixed;
+  inset: 0 0 auto 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
+  z-index: 0;
+  background: var(--forest-ink) url("../media/stills/d/arrival.webp") 50% 50% / cover no-repeat;
+}
+@media (max-width: 900px) and (orientation: portrait) {
+  .cine .stage { background-image: url("../media/stills/m/arrival.webp"); }
+}
+.cine #film {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.cine.film-ready #film { opacity: 1; }
+.cine.film-ready .stage { background-image: none; }
+
+.cine main { position: relative; z-index: 1; }
+
+.cine .scene {
+  height: calc((var(--u) + 1) * 100vh);
+  height: calc((var(--u) + 1) * 100lvh);
+  margin-bottom: -100vh;
+  margin-bottom: -100lvh;
+  pointer-events: none;
+}
+.cine .scene:last-child { margin-bottom: 0; }
+
+.cine .scene__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  min-height: 0;
+}
+
+/* Pictures come from the canvas in this mode; the scene descriptions stay for assistive tech. */
+.cine .scene__still { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.cine .scene__still img, .cine .scene__still picture { display: none; }
+
+.cine .scene__copy {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  background: none;
+  display: block;
+}
+.cine .caption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  --fade: clamp(5.5rem, 15svh, 9rem);
+  padding: var(--fade) var(--gutter) calc(var(--gutter) * 0.7 + env(safe-area-inset-bottom));
+  /* Measured from the top of the block, so the scrim is at full strength exactly where
+     the text starts, however many lines the text runs to. */
+  background: linear-gradient(to bottom,
+      rgba(7, 12, 9, 0) 0,
+      rgba(7, 12, 9, 0.22) calc(var(--fade) * 0.3),
+      rgba(7, 12, 9, 0.62) calc(var(--fade) * 0.62),
+      rgba(7, 12, 9, 0.88) calc(var(--fade) * 0.95),
+      rgba(7, 12, 9, 0.93) 100%);
+  opacity: 0;
+  will-change: opacity;
+}
+.cine .caption.is-initial { opacity: 1; }
+.cine .caption > * { will-change: transform; }
+
+.cine .hint {
+  display: block;
+  position: absolute;
+  right: var(--gutter);
+  bottom: calc(var(--gutter) * 0.85 + env(safe-area-inset-bottom));
+  font: 500 0.72rem/1 var(--sans);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cream);
+  padding-bottom: 3.2rem;
+}
+.cine .hint::after {
+  content: "";
+  position: absolute;
+  right: 50%;
+  bottom: 0;
+  width: 1px;
+  height: 2.5rem;
+  background: var(--gold-light);
+}
+
+.cine .logo {
+  /* Centred in the sky, above the house. No transform here: GSAP owns it. */
+  position: absolute;
+  inset: 0 0 28svh 0;
+  margin: auto;
+  height: -moz-fit-content;
+  height: fit-content;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+.cine .book {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 0 var(--gutter);
+}
+.cine .book > * { opacity: 0; will-change: opacity, transform; }
+.cine .button, .cine .reserve { pointer-events: auto; }
+
+.cine .progress {
+  display: block;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  z-index: 10;
+  background: rgba(246, 240, 226, 0.14);
+}
+.cine .progress i {
+  display: block;
+  height: 100%;
+  background: var(--gold-light);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 900px) and (orientation: portrait) {
+  h1 { font-size: clamp(2.6rem, 13vw, 4.2rem); }
+  .statement { font-size: clamp(1.85rem, 8.4vw, 2.7rem); max-width: 16ch; }
+  .statement--sm { font-size: clamp(1.25rem, 5.4vw, 1.6rem); max-width: 24ch; }
+  .label { font-size: 0.74rem; letter-spacing: 0.26em; }
+  .facts { font-size: 0.74rem; letter-spacing: 0.2em; }
+  .reserve { font-size: 0.66rem; padding: 0.66rem 0.85rem 0.62rem; letter-spacing: 0.18em; }
+  .cine .hint { display: none; }
+  .logo { width: min(80vw, 22rem); }
+  .cine .logo { inset: 0 0 24svh 0; }
+  .cine .book { top: 40%; }
+  .book { gap: 1.2rem; }
+  .book__facts { font-size: 0.68rem; letter-spacing: 0.12em; line-height: 1.9; max-width: 19rem; text-wrap: balance; }
+  .button { padding: 1.05rem 1.3rem 1rem; letter-spacing: 0.16em; font-size: 0.76rem; }
+  #dining   { --focus: 22% 50%; }
+  #kitchen  { --focus: 58% 50%; }
+  #living   { --focus: 36% 50%; }
+  #bathroom { --focus: 28% 50%; }
+  #bedroom  { --focus: 78% 50%; }
+  #night, #mark, #book { --focus: 46% 60%; }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  h1 { font-size: clamp(2rem, 6vw, 3.2rem); }
+  .statement { font-size: clamp(1.5rem, 3.6vw, 2.2rem); }
+  .cine .caption { --fade: 4.5rem; }
+  .logo { width: min(40vw, 20rem); }
+  .book { gap: 0.8rem; }
+  .book__title { font-size: clamp(2rem, 5vw, 3rem); }
+}
+
+@media print {
+  .reserve, .skip, .progress, .hint { display: none; }
+}
